@@ -2,6 +2,8 @@ import "./globals.css";
 
 import type { Metadata } from "next";
 
+import { cn } from "@/lib/utils";
+
 import WrapConnectKitProvider from "@/providers/WrapConnectKitProvider";
 
 export const metadata: Metadata = {
@@ -16,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className={cn("bg-background")}>
         <WrapConnectKitProvider>{children}</WrapConnectKitProvider>
       </body>
     </html>

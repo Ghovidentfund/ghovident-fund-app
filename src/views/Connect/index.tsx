@@ -1,13 +1,5 @@
-"use client";
-
-import { ConnectKitButton } from "connectkit";
-
 const ConnectView = () => {
-  return (
-    <div>
-      <ConnectKitButton showBalance />
-    </div>
-  );
+  return <div>Connect View</div>;
 };
 
 export default ConnectView;

@@ -1,4 +1,4 @@
-import Container from "@/components/common/Container";
+import Container from "@/components/Common/Container";
 import MyProvidentList from "@/views/Company/components/MyProvidentFund";
 import CompanyInformation from "@/views/Company/components/CompanyInformation";
 

@@ -11,7 +11,7 @@ const Logo = () => {
           height={30}
           alt="provident-fund-logo"
         />
-        <h1 className="text-xl font-bold text-primary">Ghovident</h1>
+        <h1 className="text-xl font-bold text-black">Ghovident</h1>
       </div>
     </Link>
   );

@@ -2,7 +2,7 @@ import { Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/Typography";
-import Container from "@/components/Commons/Container";
+import Container from "@/components/Common/Container";
 import FundCard from "@/components/Card/Fund/FundCard";
 import { providentFund } from "@/constants/fundListMock";
 

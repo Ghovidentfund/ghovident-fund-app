@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ConnectKitButton } from "connectkit";
-import Footer from "@/components/Commons/Footer/Footer";
+import Footer from "@/components/Common/Footer/Footer";
 
 const ConnectView = () => {
   return (

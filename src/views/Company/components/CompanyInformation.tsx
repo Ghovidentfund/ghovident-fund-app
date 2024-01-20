@@ -4,6 +4,7 @@ import { useAccount } from "wagmi";
 
 import { Typography } from "@/components/Typography";
 import { Button } from "@/components/ui/button";
+import { View } from "lucide-react";
 
 const CompanyInformation = () => {
   const { address } = useAccount();
@@ -41,7 +42,12 @@ const CompanyInformation = () => {
           </div>
 
           <div>
-            <Button>View employee</Button>
+            <Button variant="reverse">
+              <div className="flex items-center space-x-1">
+                <View />
+                <span>View employee</span>
+              </div>
+            </Button>
           </div>
         </div>
       </div>

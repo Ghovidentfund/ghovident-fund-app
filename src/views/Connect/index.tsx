@@ -9,11 +9,11 @@ import Footer from "@/components/Common/Footer/Footer";
 const ConnectView = () => {
   return (
     <div className="flex flex-row w-full min-h-screen items-center relative">
-      <div className="flex flex-col md:flex-row items-start justify-around w-full container z-10">
+      <div className="flex flex-col md:flex-row items-center justify-around w-full container z-10 mb-32">
         <section id="content" className="md:max-w-[50%] pb-5">
           <div className="mt-6">
-            <div className="text-4xl md:text-7xl font-bold">Ghovident fund</div>
-            <div className="text-2xl mt-4">
+            <div className="text-2xl md:text-7xl font-bold">Ghovident fund</div>
+            <div className="text-lg mt-4">
               <span>
                 Integrating blockchain technology for an enhanced quality of
                 life for employees.
@@ -25,10 +25,10 @@ const ConnectView = () => {
             {({ isConnected, show, truncatedAddress }) => {
               return isConnected ? (
                 <Link href={"/home"} id="logo">
-                  <Button className="mt-6">Launch App</Button>
+                  <Button className="mt-6 rounded-2xl">Launch App</Button>
                 </Link>
               ) : (
-                <Button onClick={show} className="mt-6">
+                <Button onClick={show} className="mt-6 rounded-2xl">
                   {isConnected ? truncatedAddress : "Get Started"}
                 </Button>
               );
@@ -38,9 +38,9 @@ const ConnectView = () => {
 
         <section id="present-img">
           <Image
-            src={"/assets/home.jpg"}
-            width={450}
-            height={500}
+            src={"/assets/home.png"}
+            width={558}
+            height={558}
             alt="provident-fund-logo"
           />
         </section>

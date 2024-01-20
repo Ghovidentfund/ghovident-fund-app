@@ -1,14 +1,12 @@
 "use client";
 
-import { useAccount, useBalance } from "wagmi";
+import { useAccount } from "wagmi";
 
 import { Typography } from "@/components/Typography";
 import { Button } from "@/components/ui/button";
-import { formatNumber } from "@/utils/formatNumber";
 
 const CompanyInformation = () => {
   const { address } = useAccount();
-  const result = useBalance({ address });
 
   return (
     <section id="company information">
@@ -22,7 +20,7 @@ const CompanyInformation = () => {
 
             <div className="space-x-1">
               <span className="text-gray-500">Wallet address :</span>
-              <span className="font-medium">{address}</span>
+              <span className="font-medium">{address ?? ""}</span>
             </div>
 
             <div className="space-x-1">

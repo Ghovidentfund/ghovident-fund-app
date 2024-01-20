@@ -13,20 +13,17 @@ const MyProvidentList = () => {
       </Typography>
       <div className="grid grid-cols-1 gap-5 mt-8">
         {providentFund.map((item, index) => (
-          <div key={index} className="flex flex-col w-full">
-            <FundCard
-              fundName={item.fundName}
-              fundLogoUrl={item.fundLogoUrl}
-              period={item.period}
-              factSheetUrl={item.factSheetUrl}
-              symbol={item.symbol}
-              volume={item.volume}
-              actionSlot={<div></div>}
-            />
-
-            <div className="flex justify-end  -mt-4">
-              <div className="space-x-2 bg-white p-2 shadow-md rounded-bl-md rounded-br-md">
-                <Button className="min-w-28">
+          <FundCard
+            key={index}
+            fundName={item.fundName}
+            fundLogoUrl={item.fundLogoUrl}
+            period={item.period}
+            factSheetUrl={item.factSheetUrl}
+            symbol={item.symbol}
+            volume={item.volume}
+            actionSlot={
+              <div className="ml-16 flex flex-col space-y-2">
+                <Button className="min-w-28" variant="black">
                   <div className="flex items-center space-x-1">
                     <LogOutIcon width={18} height={18} className="-rotate-90" />
                     <span className="text-xs">Withdraw</span>
@@ -47,8 +44,8 @@ const MyProvidentList = () => {
                   </div>
                 </Button>
               </div>
-            </div>
-          </div>
+            }
+          />
         ))}
       </div>
     </section>

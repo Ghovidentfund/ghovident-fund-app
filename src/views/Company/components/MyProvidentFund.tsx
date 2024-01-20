@@ -3,6 +3,7 @@ import { providentFund } from "@/constants/fundListMock";
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/Typography";
 import FundCard from "@/components/Card/Fund/FundCard";
+import { Landmark, LogOutIcon, Wallet } from "lucide-react";
 
 const MyProvidentList = () => {
   return (
@@ -25,11 +26,26 @@ const MyProvidentList = () => {
 
             <div className="flex justify-end  -mt-4">
               <div className="space-x-2 bg-white p-2 shadow-md rounded-bl-md rounded-br-md">
-                <Button className="min-w-28">Withdraw</Button>
+                <Button className="min-w-28">
+                  <div className="flex items-center space-x-1">
+                    <LogOutIcon width={18} height={18} className="-rotate-90" />
+                    <span className="text-xs">Withdraw</span>
+                  </div>
+                </Button>
 
-                <Button className="min-w-28">Claim</Button>
+                <Button className="min-w-28">
+                  <div className="flex items-center space-x-1">
+                    <Wallet width={18} height={18} />
+                    <span className="text-xs">Claim</span>
+                  </div>
+                </Button>
 
-                <Button className="min-w-28">Supply</Button>
+                <Button className="min-w-28" variant="reverse">
+                  <div className="flex items-center space-x-1">
+                    <Landmark width={18} height={18} />
+                    <span className="text-xs">Supply</span>
+                  </div>
+                </Button>
               </div>
             </div>
           </div>

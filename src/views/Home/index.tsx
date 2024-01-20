@@ -34,7 +34,9 @@ const HomeView = () => {
               volume={item.volume}
               actionSlot={
                 <div className="ml-16 flex flex-col justify-center items-center ">
-                  <Button className="min-w-28">Buy</Button>
+                  <Button className="min-w-28" disabled>
+                    Buy
+                  </Button>
                 </div>
               }
             />

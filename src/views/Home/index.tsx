@@ -25,7 +25,7 @@ const HomeView = () => {
           {Array.from({ length: 10 }).map((_, index) => (
             <FundCard
               key={index}
-              fundLogoUrl="https://gho.aave.com/icons/tokens/wbtc.svg"
+              fundLogoUrl="https://resource.digitaldealer.com.au/image/1027481236616752b23efde453431830_0_0.png"
               period="1m"
               factSheetUrl="https://google.com"
               symbol="WBTC"

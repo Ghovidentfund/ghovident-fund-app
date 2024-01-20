@@ -9,8 +9,9 @@ interface FundValueProps {
 const FundValue = ({ volume, symbol }: FundValueProps) => {
   return (
     <SubDetailContainer label="Volume">
-      <div className="font-semibold text-green-800">
-        {formatNumber(parseFloat(String(volume)))} {symbol}
+      <div className="font-semibold text-black text-sm space-x-2">
+        <span>{formatNumber(parseFloat(String(volume)))}</span>
+        <span className="text-gray-500">{symbol}</span>
       </div>
     </SubDetailContainer>
   );

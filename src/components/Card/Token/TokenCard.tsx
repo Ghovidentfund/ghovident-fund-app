@@ -9,8 +9,8 @@ const TokenCard = ({ symbol, name, ...rest }: TokenCardProps) => {
     <div className="flex justify-center items-center space-x-2">
       <TokenImg symbol={symbol} {...rest} />
       <div>
-        <div className="text-sm font-medium">{name}</div>
-        <div className="text-xs text-gray-400">{symbol}</div>
+        <div className="text-sm font-medium">{symbol}</div>
+        {/* <div className="text-xs text-gray-400">{symbol}</div> */}
       </div>
     </div>
   );

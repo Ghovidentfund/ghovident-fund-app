@@ -39,7 +39,7 @@ const ConnectView = () => {
         <section id="present-img">
           <Image
             src={"/assets/home.png"}
-            width={558}
+            width={700}
             height={558}
             alt="provident-fund-logo"
           />

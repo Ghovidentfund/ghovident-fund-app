@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 import Container from "@/components/Common/Container";
+import RegisterCompany from "@/views/Company/components/RegisterCompany";
 import MyProvidentList from "@/views/Company/components/MyProvidentFund";
 import CompanyInformation from "@/views/Company/components/CompanyInformation";
-import RegisterCompany from "./components/RegisterCompany";
 
 const CompanyView = () => {
   const [hasCompany, setHasCompany] = useState(false);

@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { cn } from "@/lib/utils";
 
 import WrapConnectKitProvider from "@/providers/WrapConnectKitProvider";
+import UIProvider from "@/providers/UIProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("bg-background")}>
-        <WrapConnectKitProvider>{children}</WrapConnectKitProvider>
+        <UIProvider>
+          <WrapConnectKitProvider>{children}</WrapConnectKitProvider>
+        </UIProvider>
       </body>
     </html>
   );

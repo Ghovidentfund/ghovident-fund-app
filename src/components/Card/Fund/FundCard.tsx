@@ -6,6 +6,7 @@ import FundInformation from "@/components/Card/Fund/FundInformation";
 
 interface FundCardProp {
   // Fund Info
+  fundName: string;
   fundLogoUrl: string;
   period: string;
   factSheetUrl: string;
@@ -16,20 +17,22 @@ interface FundCardProp {
   // Fund Volume
   volume: number;
 
-  disabled?: boolean;
+  actionSlot?: React.ReactNode;
 }
 
 const FundCard = ({
+  fundName,
   fundLogoUrl,
   period,
   factSheetUrl,
   symbol,
   volume,
-  disabled,
+  actionSlot,
 }: FundCardProp) => {
   return (
-    <div className="flex justify-between bg-white rounded-xl  px-6 py-3 h-full shadow-lg">
+    <div className="grid grid-cols-4  bg-white rounded-xl  px-6 py-4 h-full shadow-lg">
       <FundInformation
+        fundName={fundName}
         fundLogoUrl={fundLogoUrl}
         period={period}
         factSheetUrl={factSheetUrl}
@@ -37,14 +40,10 @@ const FundCard = ({
       <FundToken symbol={symbol} />
       <FundDividend period="1 year return" />
 
-      <div id="Volume" className="flex">
+      <div id="Volume" className="flex justify-center">
         <FundValue volume={volume} symbol={symbol} />
 
-        <div className="ml-16 flex flex-col justify-center ">
-          <Button disabled={disabled} className="min-w-28">
-            Buy
-          </Button>
-        </div>
+        {actionSlot}
       </div>
     </div>
   );

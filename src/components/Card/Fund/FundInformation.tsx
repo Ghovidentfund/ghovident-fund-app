@@ -3,12 +3,14 @@ import { FileSpreadsheet } from "lucide-react";
 import RiskTag from "@/components/Status/Risk/RiskTag";
 
 export interface FundInformationProps {
+  fundName: string;
   fundLogoUrl: string;
   period: string;
   factSheetUrl: string;
 }
 
 const FundInformation = ({
+  fundName,
   fundLogoUrl,
   period,
   factSheetUrl,
@@ -26,7 +28,7 @@ const FundInformation = ({
       </div>
 
       <div className="space-y-2">
-        <div className="text-black font-bold text-lg">Provident Fund</div>
+        <div className="text-black font-bold text-lg">{fundName}</div>
         <div className="flex items-center space-x-2">
           <span className="text-gray-400 text-sm">Risk :</span>
           <div className="flex">

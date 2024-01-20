@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/Typography";
 import Container from "@/components/Common/Container";
 import FundCard from "@/components/Card/Fund/FundCard";
+import { providentFund } from "@/constants/fundListMock";
 
 const HomeView = () => {
   return (
@@ -22,15 +23,20 @@ const HomeView = () => {
 
       <section id="provident fund list" className=" mb-12">
         <div className="grid grid-cols-1 gap-5">
-          {Array.from({ length: 10 }).map((_, index) => (
+          {providentFund.map((item, index) => (
             <FundCard
               key={index}
-              fundLogoUrl="https://resource.digitaldealer.com.au/image/1027481236616752b23efde453431830_0_0.png"
-              period="1m"
-              factSheetUrl="https://google.com"
-              symbol="WBTC"
-              volume={100000000}
-              disabled
+              fundName={item.fundName}
+              fundLogoUrl={item.fundLogoUrl}
+              period={item.period}
+              factSheetUrl={item.factSheetUrl}
+              symbol={item.symbol}
+              volume={item.volume}
+              actionSlot={
+                <div className="ml-16 flex flex-col justify-center items-center ">
+                  <Button className="min-w-28">Buy</Button>
+                </div>
+              }
             />
           ))}
         </div>

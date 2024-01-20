@@ -26,7 +26,7 @@ const FundInformation = ({
       </div>
 
       <div className="space-y-2">
-        <div className="text-black font-bold text-xl">Provident Fund</div>
+        <div className="text-black font-bold text-lg">Provident Fund</div>
         <div className="flex items-center space-x-2">
           <span className="text-gray-400 text-sm">Risk :</span>
           <div className="flex">

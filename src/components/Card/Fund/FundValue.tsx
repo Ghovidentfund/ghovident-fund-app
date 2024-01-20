@@ -1,3 +1,4 @@
+import { formatNumber } from "@/utils/formatNumber";
 import SubDetailContainer from "./SubDetailContainer";
 
 interface FundValueProps {
@@ -9,7 +10,7 @@ const FundValue = ({ volume, symbol }: FundValueProps) => {
   return (
     <SubDetailContainer label="Volume">
       <div className="font-semibold text-green-800">
-        {volume} {symbol}
+        {formatNumber(parseFloat(String(volume)))} {symbol}
       </div>
     </SubDetailContainer>
   );

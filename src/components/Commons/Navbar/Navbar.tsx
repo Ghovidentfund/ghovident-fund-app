@@ -1,11 +1,11 @@
 import dynamic from "next/dynamic";
 
-import Logo from "@/components/Common/Navbar/Logo";
-import MenuList from "@/components/Common/Navbar/MenuList";
-import { ConnectButtonSkeleton } from "@/components/Common/ConnectButton";
+import Logo from "@/components/Commons/Navbar/Logo";
+import MenuList from "@/components/Commons/Navbar/MenuList";
+import { ConnectButtonSkeleton } from "@/components/Commons/ConnectButton";
 
 const ConnectButton = dynamic(
-  () => import("@/components/Common/ConnectButton"),
+  () => import("@/components/Commons/ConnectButton"),
   { ssr: false, loading: () => <ConnectButtonSkeleton /> }
 );
 

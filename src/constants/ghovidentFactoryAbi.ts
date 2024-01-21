@@ -182,6 +182,61 @@ export const ghovidentFactoryAbi = [
   },
   {
     inputs: [],
+    name: "getAllPoolInfo",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "logoUri",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "factSheetUri",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "risk",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "period",
+            type: "uint256",
+          },
+          {
+            internalType: "address",
+            name: "assets",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "fund",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "totalVolume",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct IGhovidentPool.PoolInfo[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getAllPools",
     outputs: [
       {
@@ -270,7 +325,7 @@ export const ghovidentFactoryAbi = [
             type: "uint256",
           },
         ],
-        internalType: "struct IGhovidentPool.PoolInfo[]",
+        internalType: "struct IGhovidentPool.MyPoolInfo[]",
         name: "",
         type: "tuple[]",
       },

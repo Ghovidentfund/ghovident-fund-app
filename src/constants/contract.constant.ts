@@ -1,1 +1,1 @@
-export const GhovidentFactory = "0x761E8769d901EF0C5C33B952BbD7B1e3a4ff3595";
+export const GhovidentFactory = "0x3BE7F999eE3203CB13a294AaaE74917337949D31";

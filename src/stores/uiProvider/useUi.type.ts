@@ -1,5 +1,6 @@
 export enum ModalView {
   REGISTER_COMPANY = "register company",
+  BUY_PROVIDENT_FUND = "buy provident fund",
 }
 
 export interface IUseUiState {

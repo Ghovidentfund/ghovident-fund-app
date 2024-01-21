@@ -9,6 +9,7 @@ import RegisterCompany from "@/views/Company/components/RegisterCompany";
 import MyProvidentList from "@/views/Company/components/MyProvidentFund";
 import { ghovidentFactoryAbi } from "@/constants/ghovidentFactoryAbi";
 import { GhovidentFactory } from "@/constants/contract.constant";
+import useProvidentFund from "@/stores/providentFund/useProvidentFund.store";
 
 const CompanyInformation = dynamic(
   () => import("./components/CompanyInformation"),
@@ -16,16 +17,9 @@ const CompanyInformation = dynamic(
 );
 
 const CompanyView = () => {
-  const { address, isConnecting, isDisconnected } = useAccount();
+  const { hasCompany } = useProvidentFund();
 
   const [mounted, setMounted] = useState(false);
-
-  const { data: hasCompany } = useContractRead({
-    address: GhovidentFactory,
-    abi: ghovidentFactoryAbi,
-    functionName: "isValidCompany",
-    args: [address],
-  });
 
   useEffect(() => {
     setMounted(true);

@@ -41,7 +41,7 @@ const FundCard = ({
       <FundInformation
         fundName={fundName}
         fundLogoUrl={fundLogoUrl}
-        period={risk}
+        risk={risk}
         factSheetUrl={factSheetUrl}
       />
       <FundToken symbol={symbol} />

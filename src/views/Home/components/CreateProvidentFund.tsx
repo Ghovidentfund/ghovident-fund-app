@@ -96,8 +96,13 @@ const CreateProvidentFund = () => {
     });
 
   const onSubmit: SubmitHandler<ProvidentFundPayload> = async (data) => {
-    console.log(data);
-    await write?.();
+    setTimeout(() => {
+      writeContract();
+    }, 300);
+  };
+
+  const writeContract = () => {
+    write?.();
   };
 
   useEffect(() => {
@@ -117,7 +122,7 @@ const CreateProvidentFund = () => {
         <span>Create provident fund</span>
       </Button>
 
-      <Modal open={open} onClose={() => setOpen(false)}>
+      <Modal open={open} onClose={() => setOpen(false)} >
         <div>
           <Title />
           <div className="mt-5">

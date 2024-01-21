@@ -5,14 +5,14 @@ import RiskTag from "@/components/Status/Risk/RiskTag";
 export interface FundInformationProps {
   fundName: string;
   fundLogoUrl: string;
-  period: string;
+  risk: string;
   factSheetUrl: string;
 }
 
 const FundInformation = ({
   fundName,
   fundLogoUrl,
-  period,
+  risk,
   factSheetUrl,
 }: FundInformationProps) => {
   return (
@@ -32,7 +32,7 @@ const FundInformation = ({
         <div className="flex items-center space-x-2">
           <span className="text-gray-400 text-sm">Risk :</span>
           <div className="flex">
-            <RiskTag period={period} />
+            <RiskTag period={risk} />
           </div>
         </div>
         <a

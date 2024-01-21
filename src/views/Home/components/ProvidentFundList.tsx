@@ -17,10 +17,6 @@ const ProvidentFundList = () => {
     functionName: "getAllPoolInfo",
   });
 
-  useEffect(() => {
-    // console.log(data[0]);
-  }, [data]);
-
   return (
     <section id="provident fund list" className=" mb-12">
       <div className="my-4">
@@ -37,9 +33,11 @@ const ProvidentFundList = () => {
               fundName={item.name}
               fundLogoUrl={item.logoUri}
               period={String(item.period)}
+              risk={String(item.risk)}
               factSheetUrl={item.factSheetUri}
               symbol={tokens[item.assets].symbol || ""}
-              volume={Number(item.totalVolume)}
+              volume={item.totalVolume}
+              tokenAddress={item.assets}
               actionSlot={
                 <div className="ml-16 flex flex-col justify-center items-center ">
                   <Button className="min-w-28" disabled>

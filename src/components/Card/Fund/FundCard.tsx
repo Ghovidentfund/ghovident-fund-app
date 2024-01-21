@@ -12,13 +12,15 @@ interface FundCardProp {
   fundName: string;
   fundLogoUrl: string;
   period: string;
+  risk: string;
   factSheetUrl: string;
+  tokenAddress: string;
 
   // Token Support
   symbol: string;
 
   // Fund Volume
-  volume: number;
+  volume: bigint;
 
   actionSlot?: React.ReactNode;
 }
@@ -26,8 +28,10 @@ interface FundCardProp {
 const FundCard = ({
   fundName,
   fundLogoUrl,
+  risk,
   period,
   factSheetUrl,
+  tokenAddress,
   symbol,
   volume,
   actionSlot,
@@ -37,14 +41,18 @@ const FundCard = ({
       <FundInformation
         fundName={fundName}
         fundLogoUrl={fundLogoUrl}
-        period={period}
+        period={risk}
         factSheetUrl={factSheetUrl}
       />
       <FundToken symbol={symbol} />
       <FundDividend period={<ReturnText period={period} />} />
 
       <div id="Volume" className="flex justify-center">
-        <FundValue volume={volume} symbol={symbol} />
+        <FundValue
+          volume={volume}
+          symbol={symbol}
+          tokenAddress={tokenAddress}
+        />
 
         {actionSlot}
       </div>

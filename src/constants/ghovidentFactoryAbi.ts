@@ -187,6 +187,11 @@ export const ghovidentFactoryAbi = [
       {
         components: [
           {
+            internalType: "address",
+            name: "thisAddress",
+            type: "address",
+          },
+          {
             internalType: "string",
             name: "name",
             type: "string",
@@ -279,6 +284,11 @@ export const ghovidentFactoryAbi = [
     outputs: [
       {
         components: [
+          {
+            internalType: "address",
+            name: "thisAddress",
+            type: "address",
+          },
           {
             internalType: "string",
             name: "name",

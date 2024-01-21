@@ -8,37 +8,42 @@ import Container from "@/components/Common/Container";
 import RegisterCompany from "@/views/Company/components/RegisterCompany";
 import MyProvidentList from "@/views/Company/components/MyProvidentFund";
 import { ghovidentFactoryAbi } from "@/constants/ghovidentFactoryAbi";
+import { GhovidentFactory } from "@/constants/contract.constant";
 
 const CompanyInformation = dynamic(
-  () => import("@/views/Company/components/CompanyInformation"),
+  () => import("./components/CompanyInformation"),
   { ssr: false }
 );
 
 const CompanyView = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
 
-  const {
-    data: hasCompany,
-    isError,
-    isLoading,
-  } = useContractRead({
-    address: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+  const [mounted, setMounted] = useState(false);
+
+  const { data: hasCompany } = useContractRead({
+    address: GhovidentFactory,
     abi: ghovidentFactoryAbi,
     functionName: "isValidCompany",
     args: [address],
   });
 
-  console.log(hasCompany);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <Container>
-      {hasCompany ? (
-        <div className="space-y-6">
-          <CompanyInformation />
-          <MyProvidentList />
-        </div>
-      ) : (
-        <RegisterCompany />
+      {mounted && (
+        <>
+          {hasCompany ? (
+            <div className="space-y-6">
+              <CompanyInformation />
+              <MyProvidentList />
+            </div>
+          ) : (
+            <RegisterCompany />
+          )}
+        </>
       )}
     </Container>
   );

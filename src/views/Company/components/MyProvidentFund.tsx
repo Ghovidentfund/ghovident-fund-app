@@ -4,22 +4,37 @@ import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/Typography";
 import FundCard from "@/components/Card/Fund/FundCard";
 import { Landmark, LogOutIcon, Wallet } from "lucide-react";
+import { useAccount, useContractRead } from "wagmi";
+import { GhovidentFactory } from "@/constants/contract.constant";
+import { ghovidentFactoryAbi } from "@/constants/ghovidentFactoryAbi";
+import { tokens } from "@/constants/tokenList";
 
 const MyProvidentList = () => {
+  const { address } = useAccount();
+
+  const { data, isError, isLoading, refetch } = useContractRead({
+    address: GhovidentFactory,
+    abi: ghovidentFactoryAbi,
+    functionName: "getMyPools",
+    args: [address],
+  });
+
   return (
     <section id="my provident list">
       <Typography variant="topic" size="topic">
         My provident list
       </Typography>
       <div className="grid grid-cols-1 gap-5 mt-8">
-        {providentFund.map((item, index) => (
+        {(data as ProvidentFund[])?.map((item, index) => (
           <FundCard
             key={index}
-            fundName={item.fundName}
-            fundLogoUrl={item.fundLogoUrl}
-            period={item.period}
-            factSheetUrl={item.factSheetUrl}
-            symbol={item.symbol}
+            fundName={item.name}
+            fundLogoUrl={item.logoUri}
+            period={String(item.period)}
+            risk={String(item.risk)}
+            factSheetUrl={item.factSheetUri}
+            symbol={tokens[item.assets].symbol || ""}
+            tokenAddress={item.assets}
             volume={item.volume}
             actionSlot={
               <div className="ml-16 flex flex-col space-y-2">

@@ -1,17 +1,20 @@
-import { formatNumber } from "@/utils/formatNumber";
+import { formatUnits, parseEther } from "viem";
+
 import SubDetailContainer from "./SubDetailContainer";
+import { tokens } from "@/constants/tokenList";
 
 interface FundValueProps {
-  volume: number;
+  volume: bigint;
   symbol: string;
+  tokenAddress: string;
 }
 
-const FundValue = ({ volume, symbol }: FundValueProps) => {
+const FundValue = ({ volume, symbol, tokenAddress }: FundValueProps) => {
   return (
     <SubDetailContainer label="Volume">
       <div className="font-semibold text-[#FF7A20] text-sm space-x-2">
-        <span>{formatNumber(parseFloat(String(volume)))}</span>
-        <span >{symbol}</span>
+        <span>{formatUnits(volume, tokens[tokenAddress].decimal)}</span>
+        <span>{symbol}</span>
       </div>
     </SubDetailContainer>
   );

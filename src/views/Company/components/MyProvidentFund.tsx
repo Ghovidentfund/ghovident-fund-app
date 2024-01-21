@@ -24,7 +24,7 @@ const MyProvidentList = () => {
       <Typography variant="topic" size="topic">
         My provident list
       </Typography>
-      {(data as ProvidentFund[]).length ? (
+      {(data as ProvidentFund[])?.length ? (
         <div className="grid grid-cols-1 gap-5 mt-8">
           {(data as ProvidentFund[])?.map((item, index) => (
             <FundCard

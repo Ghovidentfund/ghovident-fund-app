@@ -86,7 +86,6 @@ const RegisterCompanyModal = () => {
         description: "Created Provident fund  successfully",
       });
       closeModal();
-      router.refresh();
     }
   }, [dataCreated]);
 

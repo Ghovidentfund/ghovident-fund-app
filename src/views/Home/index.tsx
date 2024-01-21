@@ -1,10 +1,9 @@
-import { Plus } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Typography } from "@/components/Typography";
 import Container from "@/components/Common/Container";
 import FundCard from "@/components/Card/Fund/FundCard";
 import { providentFund } from "@/constants/fundListMock";
+import CreateProvidentFund from "./components/CreateProvidentFund";
 
 const HomeView = () => {
   return (
@@ -13,10 +12,7 @@ const HomeView = () => {
         <Typography variant="topic" size="topic">
           Provident fund list
         </Typography>
-        <Button>
-          <Plus className="h-5 mr-2" />
-          <span>Create provident fund</span>
-        </Button>
+        <CreateProvidentFund />
       </div>
 
       <div className="my-4">filter</div>

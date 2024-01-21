@@ -9,6 +9,17 @@ import { View } from "lucide-react";
 const CompanyInformation = () => {
   const { address } = useAccount();
 
+  // const {
+  //   data: hasCompany,
+  //   isError,
+  //   isLoading,
+  // } = useContractRead({
+  //   address: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
+  //   abi: ghovidentFactoryAbi,
+  //   functionName: "isValidCompany",
+  //   args: [address],
+  // });
+
   return (
     <section id="company information">
       <Typography variant="topic" size="topic">

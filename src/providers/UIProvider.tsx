@@ -4,6 +4,7 @@ import Modal from "@/components/Modal/Modal";
 import { ModalView } from "@/stores/uiProvider/useUi.type";
 import useUiProvider from "@/stores/uiProvider/useUi.store";
 import RegisterCompanyModal from "@/views/Company/components/RegisterCompanyModal";
+import { Toaster } from "@/components/ui/toaster";
 
 interface UIProvideProps {
   children: React.ReactNode;
@@ -28,6 +29,7 @@ const UIProvider = ({ children }: UIProvideProps) => {
     <>
       {children}
       <ModalUI />
+      <Toaster />
     </>
   );
 };

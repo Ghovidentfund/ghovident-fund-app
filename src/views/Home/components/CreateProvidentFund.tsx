@@ -1,7 +1,7 @@
 "use client";
 import * as yup from "yup";
 import { useEffect, useState } from "react";
-import { AreaChart, Plus } from "lucide-react";
+import { AreaChart, Loader, Plus } from "lucide-react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -17,6 +17,7 @@ import InputLabel from "@/components/Input/InputLabel";
 import SelectCustom from "@/components/Select/SelectCustom";
 import {
   useContractWrite,
+  useNetwork,
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
@@ -70,6 +71,8 @@ const CreateProvidentFund = () => {
     resolver: yupResolver(createProvidentFundSchema),
   });
 
+  const { chain } = useNetwork();
+
   const { config, error } = usePrepareContractWrite({
     address: GhovidentFactory,
     abi: ghovidentFactoryAbi,
@@ -85,24 +88,25 @@ const CreateProvidentFund = () => {
     ],
   });
 
-  const { data: dataCreate, write } = useContractWrite(config);
+  const { data: dataCreate, write, isLoading } = useContractWrite(config);
 
   const { data: dataCreated, isLoading: isLoadingCreated } =
     useWaitForTransaction({
       hash: dataCreate?.hash,
     });
 
-  const onSubmit: SubmitHandler<ProvidentFundPayload> = (data) => {
-    write?.();
+  const onSubmit: SubmitHandler<ProvidentFundPayload> = async (data) => {
+    console.log(data);
+    await write?.();
   };
 
   useEffect(() => {
     if (dataCreated && dataCreated.status === "success") {
       toast({
-        title: "Created successfully",
-        description: "Created successfully",
+        title: "Successfully",
+        description: "Created Provident fund  successfully",
       });
-      // setToggle(!toggle);
+      setOpen(false);
     }
   }, [dataCreated]);
 
@@ -112,145 +116,169 @@ const CreateProvidentFund = () => {
         <Plus className="h-5 mr-2" />
         <span>Create provident fund</span>
       </Button>
+
       <Modal open={open} onClose={() => setOpen(false)}>
         <div>
           <Title />
           <div className="mt-5">
-            <form onSubmit={handleSubmit(onSubmit)} className="">
-              <div className="space-y-4 overflow-auto max-h-[450px] px-1 py-2">
-                <InputLabel
-                  require={true}
-                  label="Provident fund name"
-                  placeholder="Name"
-                  isError={Boolean(errors.name)}
-                  errorMessage={errors.name?.message || ""}
-                  defaultValue={getValues("name") || ""}
-                  onChange={(e) => {
-                    setValue("name", e.target.value);
-                  }}
-                />
-
-                <InputLabel
-                  require={true}
-                  label="Link logo"
-                  placeholder="https://..."
-                  isError={Boolean(errors.logoUri)}
-                  errorMessage={errors.logoUri?.message || ""}
-                  defaultValue={getValues("logoUri") || ""}
-                  onChange={(e) => {
-                    setValue("logoUri", e.target.value);
-                  }}
-                />
-
-                <InputLabel
-                  require={true}
-                  label="Link fact sheet"
-                  placeholder="https://..."
-                  isError={Boolean(errors.factSheetUri)}
-                  errorMessage={errors.factSheetUri?.message || ""}
-                  defaultValue={getValues("factSheetUri") || ""}
-                  onChange={(e) => {
-                    setValue("factSheetUri", e.target.value);
-                  }}
-                />
-
-                <SelectCustom
-                  require={true}
-                  label="Token"
-                  placeholder="Select a token"
-                  onChange={(e) => setValue("asset", e)}
-                  isError={Boolean(errors.asset)}
-                  errorMessage={errors.asset?.message || ""}
-                  selectContent={
-                    <>
-                      {tokenList.map((token) => {
-                        return (
-                          <SelectItem key={token.address} value={token.address}>
-                            <div className="flex items-center space-x-3">
-                              <TokenImg symbol={token.symbol} />
-                              <span>{token.symbol}</span>
-                            </div>
-                          </SelectItem>
-                        );
-                      })}
-                    </>
-                  }
-                />
-
-                <SelectCustom
-                  require={true}
-                  label="Risk"
-                  placeholder="Select risk level"
-                  onChange={(e) => setValue("risk", Number(e))}
-                  isError={Boolean(errors.risk)}
-                  errorMessage={errors.risk?.message || ""}
-                  selectContent={
-                    <>
-                      {riskStatusList.map((risk) => {
-                        return (
-                          <SelectItem
-                            key={risk.value}
-                            value={String(risk.value)}
-                          >
-                            <RiskTag period={risk.period} />
-                          </SelectItem>
-                        );
-                      })}
-                    </>
-                  }
-                />
-
-                <SelectCustom
-                  require={true}
-                  label="Returns in"
-                  placeholder="Select return level"
-                  onChange={(e) => setValue("period", Number(e))}
-                  isError={Boolean(errors.period)}
-                  errorMessage={errors.period?.message || ""}
-                  selectContent={
-                    <>
-                      {returnsList.map((item) => {
-                        return (
-                          <SelectItem
-                            key={item.value}
-                            value={String(item.value)}
-                          >
-                            {item.label}
-                          </SelectItem>
-                        );
-                      })}
-                    </>
-                  }
-                />
-
-                <InputLabel
-                  require={true}
-                  label="Provident fund address"
-                  placeholder="Contract address Ex. 0x..."
-                  isError={Boolean(errors.fundAddress)}
-                  errorMessage={errors.fundAddress?.message || ""}
-                  defaultValue={getValues("fundAddress") || ""}
-                  onChange={(e) => {
-                    setValue("fundAddress", e.target.value);
-                  }}
-                />
+            {isLoadingCreated ? (
+              <div className=" flex items-center justify-center min-h-[450px]">
+                <div className="flex flex-col items-center justify-center">
+                  <Loader className="animate-spin" width={32} height={32} />
+                  <a
+                    href={`${chain?.blockExplorers?.default.url}/tx/${dataCreate?.hash}`}
+                    target="_blank"
+                    className="underline mt-4 font-semibold"
+                  >
+                    View Explorer
+                  </a>
+                </div>
               </div>
-              <div className="grid grid-cols-2 mt-7 gap-4">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => {
-                    setOpen(false);
-                    reset();
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button type="submit" disabled={isLoadingCreated}>
-                  Create
-                </Button>
-              </div>
-            </form>
+            ) : (
+              <form onSubmit={handleSubmit(onSubmit)} className="">
+                <div className="space-y-4 overflow-auto max-h-[450px] px-1 py-2">
+                  <InputLabel
+                    require={true}
+                    label="Provident fund name"
+                    placeholder="Name"
+                    isError={Boolean(errors.name)}
+                    errorMessage={errors.name?.message || ""}
+                    defaultValue={getValues("name") || ""}
+                    onChange={(e) => {
+                      setValue("name", e.target.value);
+                    }}
+                  />
+
+                  <InputLabel
+                    require={true}
+                    label="Link logo"
+                    placeholder="https://..."
+                    isError={Boolean(errors.logoUri)}
+                    errorMessage={errors.logoUri?.message || ""}
+                    defaultValue={getValues("logoUri") || ""}
+                    onChange={(e) => {
+                      setValue("logoUri", e.target.value);
+                    }}
+                  />
+
+                  <InputLabel
+                    require={true}
+                    label="Link fact sheet"
+                    placeholder="https://..."
+                    isError={Boolean(errors.factSheetUri)}
+                    errorMessage={errors.factSheetUri?.message || ""}
+                    defaultValue={getValues("factSheetUri") || ""}
+                    onChange={(e) => {
+                      setValue("factSheetUri", e.target.value);
+                    }}
+                  />
+
+                  <SelectCustom
+                    require={true}
+                    label="Token"
+                    placeholder="Select a token"
+                    onChange={(e) => setValue("asset", e)}
+                    isError={Boolean(errors.asset)}
+                    errorMessage={errors.asset?.message || ""}
+                    selectContent={
+                      <>
+                        {tokenList.map((token) => {
+                          return (
+                            <SelectItem
+                              key={token.address}
+                              value={token.address}
+                            >
+                              <div className="flex items-center space-x-3">
+                                <TokenImg symbol={token.symbol} />
+                                <span>{token.symbol}</span>
+                              </div>
+                            </SelectItem>
+                          );
+                        })}
+                      </>
+                    }
+                  />
+
+                  <SelectCustom
+                    require={true}
+                    label="Risk"
+                    placeholder="Select risk level"
+                    onChange={(e) => setValue("risk", Number(e))}
+                    isError={Boolean(errors.risk)}
+                    errorMessage={errors.risk?.message || ""}
+                    selectContent={
+                      <>
+                        {riskStatusList.map((risk) => {
+                          return (
+                            <SelectItem
+                              key={risk.value}
+                              value={String(risk.value)}
+                            >
+                              <RiskTag period={risk.period} />
+                            </SelectItem>
+                          );
+                        })}
+                      </>
+                    }
+                  />
+
+                  <SelectCustom
+                    require={true}
+                    label="Returns in"
+                    placeholder="Select return level"
+                    onChange={(e) => setValue("period", Number(e))}
+                    isError={Boolean(errors.period)}
+                    errorMessage={errors.period?.message || ""}
+                    selectContent={
+                      <>
+                        {returnsList.map((item) => {
+                          return (
+                            <SelectItem
+                              key={item.value}
+                              value={String(item.value)}
+                            >
+                              {item.label}
+                            </SelectItem>
+                          );
+                        })}
+                      </>
+                    }
+                  />
+
+                  <InputLabel
+                    require={true}
+                    label="Provident fund address"
+                    placeholder="Contract address Ex. 0x..."
+                    isError={Boolean(errors.fundAddress)}
+                    errorMessage={errors.fundAddress?.message || ""}
+                    defaultValue={getValues("fundAddress") || ""}
+                    onChange={(e) => {
+                      setValue("fundAddress", e.target.value);
+                    }}
+                  />
+                </div>
+                <div className="grid grid-cols-2 mt-7 gap-4">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      setOpen(false);
+                      reset();
+                    }}
+                    disabled={isLoadingCreated}
+                  >
+                    Cancel
+                  </Button>
+                  <Button type="submit" disabled={isLoadingCreated}>
+                    {isLoading ? (
+                      <span className="animate-bounce">Loading...</span>
+                    ) : (
+                      <span>Create</span>
+                    )}
+                  </Button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </Modal>

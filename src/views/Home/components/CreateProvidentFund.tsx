@@ -8,6 +8,18 @@ import Modal from "@/components/Modal/Modal";
 import { Button } from "@/components/ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import InputLabel from "@/components/Input/InputLabel";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { tokenList } from "@/constants/tokenList";
+import TokenImg from "@/components/Token/TokenImg";
+import SelectCustom from "@/components/Select/SelectCustom";
+import RiskTag from "@/components/Status/Risk/RiskTag";
+import { returnsList, riskStatusList } from "@/constants/risk";
 
 const Title = () => {
   return (
@@ -33,7 +45,7 @@ type ProvidentFundPayload = {
 const createProvidentFundSchema = yup
   .object({
     name: yup.string().required("Please,fill the fund's name"),
-    logoUri: yup.string().email().required("Please,fill a link logo url"),
+    logoUri: yup.string().required("Please,fill a link logo url"),
     factSheetUri: yup.string().required("Please,fill a link fact sheet uri"),
     asset: yup.string().required("Please,Select a token"),
     risk: yup.number().required("Please,Select a risk"),
@@ -49,6 +61,7 @@ const CreateProvidentFund = () => {
     handleSubmit,
     setValue,
     getValues,
+    reset,
     formState: { errors },
   } = useForm<ProvidentFundPayload>({
     resolver: yupResolver(createProvidentFundSchema),
@@ -70,7 +83,7 @@ const CreateProvidentFund = () => {
           <Title />
           <div className="mt-5">
             <form onSubmit={handleSubmit(onSubmit)} className="">
-              <div className="space-y-4">
+              <div className="space-y-4 overflow-auto max-h-[450px] px-1 py-2">
                 <InputLabel
                   require={true}
                   label="Provident fund name"
@@ -107,40 +120,73 @@ const CreateProvidentFund = () => {
                   }}
                 />
 
-                <InputLabel
+                <SelectCustom
                   require={true}
                   label="Token"
-                  placeholder="https://..."
+                  placeholder="Select a token"
+                  onChange={(e) => setValue("asset", e)}
                   isError={Boolean(errors.asset)}
                   errorMessage={errors.asset?.message || ""}
-                  defaultValue={getValues("asset") || ""}
-                  onChange={(e) => {
-                    setValue("asset", e.target.value);
-                  }}
+                  selectContent={
+                    <>
+                      {tokenList.map((token) => {
+                        return (
+                          <SelectItem key={token.address} value={token.address}>
+                            <div className="flex items-center space-x-3">
+                              <TokenImg symbol={token.symbol} />
+                              <span>{token.symbol}</span>
+                            </div>
+                          </SelectItem>
+                        );
+                      })}
+                    </>
+                  }
                 />
 
-                <InputLabel
+                <SelectCustom
                   require={true}
                   label="Risk"
-                  placeholder="Low, Moderate, High or Very high"
+                  placeholder="Select risk level"
+                  onChange={(e) => setValue("risk", Number(e))}
                   isError={Boolean(errors.risk)}
                   errorMessage={errors.risk?.message || ""}
-                  defaultValue={getValues("risk") || ""}
-                  onChange={(e) => {
-                    setValue("risk", Number(e.target.value));
-                  }}
+                  selectContent={
+                    <>
+                      {riskStatusList.map((risk) => {
+                        return (
+                          <SelectItem
+                            key={risk.value}
+                            value={String(risk.value)}
+                          >
+                            <RiskTag period={risk.period} />
+                          </SelectItem>
+                        );
+                      })}
+                    </>
+                  }
                 />
 
-                <InputLabel
+                <SelectCustom
                   require={true}
                   label="Returns in"
-                  placeholder="1month , 3 months , 6 months and 1 year"
-                  isError={Boolean(errors.risk)}
-                  errorMessage={errors.risk?.message || ""}
-                  defaultValue={getValues("risk") || ""}
-                  onChange={(e) => {
-                    setValue("risk", Number(e.target.value));
-                  }}
+                  placeholder="Select return level"
+                  onChange={(e) => setValue("period", Number(e))}
+                  isError={Boolean(errors.period)}
+                  errorMessage={errors.period?.message || ""}
+                  selectContent={
+                    <>
+                      {returnsList.map((item) => {
+                        return (
+                          <SelectItem
+                            key={item.value}
+                            value={String(item.value)}
+                          >
+                            {item.label}
+                          </SelectItem>
+                        );
+                      })}
+                    </>
+                  }
                 />
 
                 <InputLabel
@@ -159,7 +205,10 @@ const CreateProvidentFund = () => {
                 <Button
                   type="button"
                   variant="outline"
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    reset();
+                  }}
                 >
                   Cancel
                 </Button>

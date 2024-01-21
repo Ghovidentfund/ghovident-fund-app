@@ -8,10 +8,10 @@ import Footer from "@/components/Common/Footer/Footer";
 
 const ConnectView = () => {
   return (
-    <div className="flex flex-row w-full min-h-screen items-center relative">
+    <div className="flex flex-row w-full min-h-screen items-center relative md:pb-[64px]">
       <div className="flex flex-col md:flex-row items-start justify-around w-full container z-10">
         <section id="content" className="md:max-w-[50%] pb-5">
-          <div className="mt-6">
+          <div className="md:mt-24">
             <div className="text-4xl md:text-7xl font-bold">Ghovident fund</div>
             <div className="text-2xl mt-4">
               <span>
@@ -28,7 +28,7 @@ const ConnectView = () => {
                   <Button className="mt-6">Launch App</Button>
                 </Link>
               ) : (
-                <Button onClick={show} className="mt-6">
+                <Button onClick={show} className="mt-8">
                   {isConnected ? truncatedAddress : "Get Started"}
                 </Button>
               );
@@ -38,7 +38,7 @@ const ConnectView = () => {
 
         <section id="present-img">
           <Image
-            src={"/assets/home.jpg"}
+            src={"/assets/home.png"}
             width={450}
             height={500}
             alt="provident-fund-logo"
@@ -46,7 +46,7 @@ const ConnectView = () => {
         </section>
       </div>
       <div className="fixed bottom-0 flex justify-center w-full bg-primary">
-        <div className="container mx-auto flex justify-between items-center py-3 min-h-16 text-white text-base">
+        <div className="container mx-auto flex justify-between items-center py-3 min-h-16 text-white text-xs">
           Copyright &#169; Ghovident 2024. All Rights Reserved.
         </div>
       </div>

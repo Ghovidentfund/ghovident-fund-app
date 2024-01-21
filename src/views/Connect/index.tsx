@@ -23,14 +23,10 @@ const ConnectView = () => {
 
           <ConnectKitButton.Custom>
             {({ isConnected, show, truncatedAddress }) => {
-              return isConnected ? (
+              return (
                 <Link href={"/home"} id="logo">
                   <Button className="mt-6 rounded-2xl">Launch App</Button>
                 </Link>
-              ) : (
-                <Button onClick={show} className="mt-6 rounded-2xl">
-                  {isConnected ? truncatedAddress : "Get Started"}
-                </Button>
               );
             }}
           </ConnectKitButton.Custom>

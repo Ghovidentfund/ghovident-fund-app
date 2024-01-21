@@ -1,0 +1,7 @@
+  .backgroundContainer {
+    background-image: url('/assets/my-company-bg.png');
+    background-size: cover;
+    background-position: center;
+    color: #413B61;
+    border-radius: 0.75rem;
+  }

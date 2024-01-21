@@ -9,7 +9,8 @@ import UIProvider from "@/providers/UIProvider";
 
 export const metadata: Metadata = {
   title: "Ghovident",
-  description: "Integrating blockchain technology for an enhanced quality of life for employees.",
+  description:
+    "Integrating blockchain technology for an enhanced quality of life for employees.",
 };
 
 export default function RootLayout({
@@ -20,9 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn("bg-background")}>
-        <UIProvider>
-          <WrapConnectKitProvider>{children}</WrapConnectKitProvider>
-        </UIProvider>
+        <WrapConnectKitProvider>
+          <UIProvider>{children}</UIProvider>
+        </WrapConnectKitProvider>
       </body>
     </html>
   );

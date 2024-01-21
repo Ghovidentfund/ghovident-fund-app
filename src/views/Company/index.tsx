@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { useAccount, useContractRead } from "wagmi";
 
@@ -17,16 +17,18 @@ const CompanyInformation = dynamic(
 const CompanyView = () => {
   const { address, isConnecting, isDisconnected } = useAccount();
 
-  const { data, isError, isLoading } = useContractRead({
+  const {
+    data: hasCompany,
+    isError,
+    isLoading,
+  } = useContractRead({
     address: "0xecb504d39723b0be0e3a9aa33d646642d1051ee1",
     abi: ghovidentFactoryAbi,
     functionName: "isValidCompany",
     args: [address],
   });
 
-  console.log(data);
-
-  const [hasCompany, setHasCompany] = useState(!false);
+  console.log(hasCompany);
 
   return (
     <Container>

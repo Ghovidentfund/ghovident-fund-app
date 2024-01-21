@@ -1,3 +1,4 @@
+"use client";
 import * as yup from "yup";
 import { Building2 } from "lucide-react";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,6 +7,17 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import InputLabel from "@/components/Input/InputLabel";
 import useUiProvider from "@/stores/uiProvider/useUi.store";
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+import { GhovidentFactory } from "@/constants/contract.constant";
+import { ghovidentFactoryAbi } from "@/constants/ghovidentFactoryAbi";
+import { useEffect } from "react";
+import { toast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const Title = () => {
   return (
@@ -20,7 +32,6 @@ const Title = () => {
 
 type Inputs = {
   companyName: string;
-  email: string;
   walletAddress: string;
   linkInfo: string;
 };
@@ -28,14 +39,15 @@ type Inputs = {
 const createCompanySchema = yup
   .object({
     companyName: yup.string().required("Please,fill the company's name"),
-    email: yup.string().email().required("Please,fill the email"),
     walletAddress: yup.string().required("Please,fill the wallet address"),
     linkInfo: yup.string().required("Please,fill the link information"),
   })
   .required();
 
 const RegisterCompanyModal = () => {
+  const { address } = useAccount();
   const { closeModal } = useUiProvider();
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -43,13 +55,40 @@ const RegisterCompanyModal = () => {
     getValues,
     formState: { errors },
   } = useForm<Inputs>({
+    defaultValues: {
+      walletAddress: address,
+    },
     resolver: yupResolver(createCompanySchema),
   });
 
+  const { config, isSuccess, error } = usePrepareContractWrite({
+    address: GhovidentFactory,
+    abi: ghovidentFactoryAbi,
+    functionName: "createCompany",
+    args: [getValues("companyName"), getValues("linkInfo")],
+  });
+
+  const { data: dataCreate, isLoading, write } = useContractWrite(config);
+
+  const { data: dataCreated, isLoading: isLoadingCreated } =
+    useWaitForTransaction({
+      hash: dataCreate?.hash,
+    });
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    // TODO: Call smart contract for create company
-    console.log(data);
+    write?.();
   };
+
+  useEffect(() => {
+    if (dataCreated && dataCreated.status === "success") {
+      toast({
+        title: "Successfully",
+        description: "Created Provident fund  successfully",
+      });
+      closeModal();
+      router.refresh();
+    }
+  }, [dataCreated]);
 
   return (
     <div>
@@ -71,23 +110,12 @@ const RegisterCompanyModal = () => {
 
             <InputLabel
               require={true}
-              label="Contact Email"
-              placeholder="Email"
-              isError={Boolean(errors.email)}
-              errorMessage={errors.email?.message || ""}
-              defaultValue={getValues("email") || ""}
-              onChange={(e) => {
-                setValue("email", e.target.value);
-              }}
-            />
-
-            <InputLabel
-              require={true}
               label="Wallet Address"
               placeholder="0x..."
               isError={Boolean(errors.walletAddress)}
               errorMessage={errors.walletAddress?.message || ""}
               defaultValue={getValues("walletAddress") || ""}
+              disabled={true}
               onChange={(e) => {
                 setValue("walletAddress", e.target.value);
               }}
@@ -109,7 +137,13 @@ const RegisterCompanyModal = () => {
             <Button type="button" variant="outline" onClick={closeModal}>
               Cancel
             </Button>
-            <Button type="submit">Create</Button>
+            <Button type="submit" disabled={isLoadingCreated}>
+              {isLoading ? (
+                <span className="animate-bounce">Loading...</span>
+              ) : (
+                <span>Create</span>
+              )}
+            </Button>
           </div>
         </form>
       </div>

@@ -1,25 +1,28 @@
 "use client";
 import * as yup from "yup";
-import { useState } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useState } from "react";
 import { AreaChart, Plus } from "lucide-react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+import { returnsList, riskStatusList } from "@/constants/risk";
 
 import Modal from "@/components/Modal/Modal";
 import { Button } from "@/components/ui/button";
-import { SubmitHandler, useForm } from "react-hook-form";
-import InputLabel from "@/components/Input/InputLabel";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { tokenList } from "@/constants/tokenList";
 import TokenImg from "@/components/Token/TokenImg";
-import SelectCustom from "@/components/Select/SelectCustom";
+import { SelectItem } from "@/components/ui/select";
 import RiskTag from "@/components/Status/Risk/RiskTag";
-import { returnsList, riskStatusList } from "@/constants/risk";
+import InputLabel from "@/components/Input/InputLabel";
+import SelectCustom from "@/components/Select/SelectCustom";
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
+import { GhovidentFactory } from "@/constants/contract.constant";
+import { ghovidentFactoryAbi } from "@/constants/ghovidentFactoryAbi";
+import { toast } from "@/components/ui/use-toast";
 
 const Title = () => {
   return (
@@ -67,10 +70,41 @@ const CreateProvidentFund = () => {
     resolver: yupResolver(createProvidentFundSchema),
   });
 
+  const { config, error } = usePrepareContractWrite({
+    address: GhovidentFactory,
+    abi: ghovidentFactoryAbi,
+    functionName: "createPool",
+    args: [
+      getValues("name"),
+      getValues("asset"),
+      getValues("fundAddress"),
+      getValues("logoUri"),
+      getValues("factSheetUri"),
+      getValues("risk"),
+      getValues("period"),
+    ],
+  });
+
+  const { data: dataCreate, write } = useContractWrite(config);
+
+  const { data: dataCreated, isLoading: isLoadingCreated } =
+    useWaitForTransaction({
+      hash: dataCreate?.hash,
+    });
+
   const onSubmit: SubmitHandler<ProvidentFundPayload> = (data) => {
-    // TODO: Call smart contract for create company
-    console.log(data);
+    write?.();
   };
+
+  useEffect(() => {
+    if (dataCreated && dataCreated.status === "success") {
+      toast({
+        title: "Created successfully",
+        description: "Created successfully",
+      });
+      // setToggle(!toggle);
+    }
+  }, [dataCreated]);
 
   return (
     <div>
@@ -212,7 +246,9 @@ const CreateProvidentFund = () => {
                 >
                   Cancel
                 </Button>
-                <Button type="submit">Create</Button>
+                <Button type="submit" disabled={isLoadingCreated}>
+                  Create
+                </Button>
               </div>
             </form>
           </div>

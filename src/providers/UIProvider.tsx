@@ -18,7 +18,6 @@ interface UIProvideProps {
 
 const UIProvider = ({ children }: UIProvideProps) => {
   const { setHasCompany } = useProvidentFund((state) => state);
-  const { displayModal } = useUiProvider((state) => state);
 
   const { address, isConnected } = useAccount();
 
@@ -48,9 +47,8 @@ const UIProvider = ({ children }: UIProvideProps) => {
 
   useEffect(() => {
     setHasCompany(hasCompany as boolean);
-    refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConnected, displayModal]);
+  }, [isConnected]);
 
   return (
     <>

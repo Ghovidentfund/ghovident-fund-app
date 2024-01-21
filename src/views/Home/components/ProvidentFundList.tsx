@@ -12,7 +12,7 @@ import { ghovidentFactoryAbi } from "@/constants/ghovidentFactoryAbi";
 import useUiProvider from "@/stores/uiProvider/useUi.store";
 import { ModalView } from "@/stores/uiProvider/useUi.type";
 import useProvidentFund from "@/stores/providentFund/useProvidentFund.store";
-import { RefreshCcw } from "lucide-react";
+import { Package, RefreshCcw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const ProvidentFundList = () => {
@@ -48,7 +48,7 @@ const ProvidentFundList = () => {
 
       {isLoading ? (
         <div>Loading</div>
-      ) : (
+      ) : (data as ProvidentFund[]).length ? (
         <div className="grid grid-cols-1 gap-5">
           {(data as ProvidentFund[])?.map((item, index) => (
             <FundCard
@@ -74,6 +74,11 @@ const ProvidentFundList = () => {
               }
             />
           ))}
+        </div>
+      ) : (
+        <div className="flex items-center w-full justify-center text-gray-400">
+          <Package width={40} height={40} />
+          <span>No result</span>
         </div>
       )}
     </section>

@@ -90,15 +90,11 @@ const BuyProvidentFundModal = () => {
     });
 
   const handleApprove = () => {
-    setTimeout(() => {
-      writeApprove?.();
-    });
+    writeApprove?.();
   };
 
   const handleBuy = () => {
-    setTimeout(() => {
-      writeBuy?.();
-    });
+    writeBuy?.();
   };
 
   useEffect(() => {
@@ -170,7 +166,11 @@ const BuyProvidentFundModal = () => {
           )}
 
           {step === StepBuy.BUY && (
-            <Button onClick={handleBuy} disabled={isLoadingBuy}>
+            <Button
+              onClick={handleBuy}
+              disabled={isLoadingBuy || isLoadingBought}
+              className="cursor-pointer"
+            >
               {isLoadingBought ? "Buying" : "Buy"}
             </Button>
           )}

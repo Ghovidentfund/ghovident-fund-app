@@ -1,9 +1,3 @@
-import { Button } from "@/components/ui/button";
-import FundValue from "@/components/Card/Fund/FundValue";
-import FundToken from "@/components/Card/Fund/FundToken";
-import FundDividend from "@/components/Card/Fund/FundDividend";
-import FundInformation from "@/components/Card/Fund/FundInformation";
-
 import {
   Accordion,
   AccordionContent,
@@ -49,7 +43,7 @@ const EmployeeCard = ({
     <Accordion
       type="single"
       collapsible
-      className="w-full mb-5 bg-white rounded-lg border-0"
+      className="w-full mb-3 bg-white rounded-lg border-0"
     >
       <AccordionItem value="item-1">
         <AccordionTrigger className="px-4">

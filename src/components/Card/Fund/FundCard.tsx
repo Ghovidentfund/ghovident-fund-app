@@ -1,8 +1,11 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import FundValue from "@/components/Card/Fund/FundValue";
 import FundToken from "@/components/Card/Fund/FundToken";
 import FundDividend from "@/components/Card/Fund/FundDividend";
 import FundInformation from "@/components/Card/Fund/FundInformation";
+import ReturnText from "@/components/Status/Risk/ReturnText";
 
 interface FundCardProp {
   // Fund Info
@@ -38,7 +41,7 @@ const FundCard = ({
         factSheetUrl={factSheetUrl}
       />
       <FundToken symbol={symbol} />
-      <FundDividend period="1 year return" />
+      <FundDividend period={<ReturnText period={period} />} />
 
       <div id="Volume" className="flex justify-center">
         <FundValue volume={volume} symbol={symbol} />

@@ -7,8 +7,6 @@ import { useAccount, useContractRead } from "wagmi";
 import Container from "@/components/Common/Container";
 import RegisterCompany from "@/views/Company/components/RegisterCompany";
 import MyProvidentList from "@/views/Company/components/MyProvidentFund";
-import { ghovidentFactoryAbi } from "@/constants/ghovidentFactoryAbi";
-import { GhovidentFactory } from "@/constants/contract.constant";
 import useProvidentFund from "@/stores/providentFund/useProvidentFund.store";
 
 const CompanyInformation = dynamic(

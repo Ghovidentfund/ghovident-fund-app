@@ -12,12 +12,14 @@ import { ghovidentFactoryAbi } from "@/constants/ghovidentFactoryAbi";
 import useUiProvider from "@/stores/uiProvider/useUi.store";
 import { ModalView } from "@/stores/uiProvider/useUi.type";
 import useProvidentFund from "@/stores/providentFund/useProvidentFund.store";
+import { RefreshCcw } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const ProvidentFundList = () => {
-  const { openModal } = useUiProvider();
+  const { openModal, displayModal } = useUiProvider();
   const { setProvidentFund, hasCompany } = useProvidentFund();
 
-  const { data, isError, isLoading, refetch } = useContractRead({
+  const { data, isLoading, refetch } = useContractRead({
     address: GhovidentFactory,
     abi: ghovidentFactoryAbi,
     functionName: "getAllPoolInfo",
@@ -28,10 +30,20 @@ const ProvidentFundList = () => {
     openModal(ModalView.BUY_PROVIDENT_FUND);
   };
 
+  useEffect(() => {
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayModal]);
+
   return (
     <section id="provident fund list" className=" mb-12">
-      <div className="my-4">
-        <Button onClick={() => refetch()}>Refresh</Button>
+      <div className="my-4 flex w-full justify-end">
+        <Button variant="ghost" onClick={() => refetch()}>
+          <div className="space-x-2 flex items-center">
+            <RefreshCcw className={cn(isLoading && "animate-spin")} />
+            <span>Refresh</span>
+          </div>
+        </Button>
       </div>
 
       {isLoading ? (

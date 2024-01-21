@@ -18,10 +18,11 @@ interface UIProvideProps {
 
 const UIProvider = ({ children }: UIProvideProps) => {
   const { setHasCompany } = useProvidentFund((state) => state);
+  const { displayModal } = useUiProvider((state) => state);
 
   const { address, isConnected } = useAccount();
 
-  const { data: hasCompany } = useContractRead({
+  const { data: hasCompany, refetch } = useContractRead({
     address: GhovidentFactory,
     abi: ghovidentFactoryAbi,
     functionName: "isValidCompany",
@@ -46,11 +47,10 @@ const UIProvider = ({ children }: UIProvideProps) => {
   };
 
   useEffect(() => {
-    if (isConnected) {
-      setHasCompany((hasCompany as boolean));
-    }
+    setHasCompany(hasCompany as boolean);
+    refetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isConnected]);
+  }, [isConnected, displayModal]);
 
   return (
     <>
